@@ -1,0 +1,50 @@
+services:
+  db:
+    image: pgvector/pgvector:pg17@sha256:ac08538c6f8b9904c33c8224c5e5706dbe760aca29db1d096972b4052c22a75d
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: ${POSTGRES_DB:-buddler}
+      APP_RW_PASSWORD: ${APP_RW_PASSWORD:?set APP_RW_PASSWORD in .env}
+      MCP_RO_PASSWORD: ${MCP_RO_PASSWORD:?set MCP_RO_PASSWORD in .env}
+    ports:
+      - "127.0.0.1:${DB_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # Read-only knowledge access for the agent (AGENTS.md §5).
+  mcp:
+    # Pinned by digest: tested image (supply chain, reproducible demo).
+    image: crystaldba/postgres-mcp:latest@sha256:dbbd346860d29f1543e991f30f3284bf4ab5f096d049ecc3426528f20b1b6e6b
+    command: ["--access-mode=restricted", "--transport=sse", "--sse-host=0.0.0.0", "--sse-port=8000"]
+    environment:
+      DATABASE_URI: postgresql://mcp_ro:${MCP_RO_PASSWORD}@db:5432/${POSTGRES_DB:-buddler}
+    ports:
+      - "127.0.0.1:${MCP_PORT:-8001}:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  app:
+    build: .
+    profiles: ["app"]
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://app_rw:${APP_RW_PASSWORD}@db:5432/${POSTGRES_DB:-buddler}
+      MCP_URL: http://mcp:8000/sse
+    ports:
+      - "127.0.0.1:${API_PORT:-8000}:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      mcp:
+        condition: service_started
+
+volumes:
+  pgdata:

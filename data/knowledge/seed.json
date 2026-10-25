@@ -1,0 +1,76 @@
+{
+  "symptoms": [
+    {
+      "text": "feeling cold",
+      "actions": [
+        {
+          "kind": "advice",
+          "title": "Close the window",
+          "instruction": "A window is open: close it first, the room will warm up quickly.",
+          "conditions": {"window_open": true},
+          "priority": 5
+        },
+        {
+          "kind": "heating_delta",
+          "title": "Raise heating by 1 °C",
+          "instruction": "Raise the room's thermostat setpoint by 1 °C.",
+          "params": {"delta_c": 1.0},
+          "conditions": {
+            "time_from": "06:00",
+            "time_to": "22:00",
+            "sun_hours_max": 1.0,
+            "room_temp_max_c": 22.0,
+            "window_open": false
+          },
+          "priority": 10
+        },
+        {
+          "kind": "advice",
+          "title": "Warm drink or sweater",
+          "instruction": "Have a hot tea and put on a warm sweater or a blanket; the heating stays in night mode.",
+          "conditions": {"time_from": "22:00", "time_to": "06:00"},
+          "priority": 20
+        },
+        {
+          "kind": "advice",
+          "title": "Let the sun warm the room",
+          "instruction": "Sunshine is expected soon: open the blinds and let the sun warm the room; a sweater helps until then.",
+          "conditions": {"time_from": "06:00", "time_to": "20:00", "sun_hours_min": 2.0},
+          "priority": 30
+        }
+      ]
+    },
+    {
+      "text": "feeling warm",
+      "actions": [
+        {
+          "kind": "heating_delta",
+          "title": "Lower heating by 1 °C",
+          "instruction": "Lower the room's thermostat setpoint by 1 °C.",
+          "params": {"delta_c": -1.0},
+          "conditions": {"room_temp_min_c": 21.0},
+          "priority": 10
+        },
+        {
+          "kind": "advice",
+          "title": "Ventilate briefly",
+          "instruction": "Open the window wide for five minutes, then close it again.",
+          "conditions": {"outdoor_temp_max_c": 20.0, "window_open": false},
+          "priority": 20
+        }
+      ]
+    },
+    {
+      "text": "air is stuffy",
+      "actions": [
+        {
+          "kind": "advice",
+          "title": "Shock ventilation",
+          "instruction": "Open the windows wide for five to ten minutes; turn the thermostat down meanwhile.",
+          "conditions": {"window_open": false},
+          "priority": 10
+        }
+      ]
+    }
+  ]
+}

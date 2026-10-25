@@ -1,0 +1,34 @@
+# Python / tooling
+.venv/
+__pycache__/
+*.py[cod]
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+dist/
+build/
+
+# Secrets (AGENTS.md §7)
+.env
+.env.*
+!.env.example
+
+# Input/output data; only the curated demo knowledge is versioned
+data/*
+!data/.gitkeep
+!data/knowledge/
+data/knowledge/*
+!data/knowledge/seed.json
+
+# Traces / exports that may contain user sentences
+traces/
+*.trace.json
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
+
+# APM package cache (re-created by `apm install`)
+apm_modules/
