@@ -1,0 +1,346 @@
+lockfile_version: '1'
+apm_version: 0.31.0
+dependencies:
+- repo_url: prj120/ai-setup
+  name: fastapi-backend-api
+  host: github.com
+  resolved_commit: 5fee1b29be302e1a328d21fcbf13c4d186ac7fee
+  resolved_ref: v4.0.0
+  version: 4.0.0
+  virtual_path: packages/fastapi
+  is_virtual: true
+  package_type: apm_package
+  deployed_files:
+  - .claude/rules/fastapi-architecture.md
+  - .claude/rules/fastapi-style.md
+  - .claude/rules/fastapi-testing.md
+  - .claude/skills/fastapi-route-expert
+  - .claude/skills/fastapi-route-expert/SKILL.md
+  - .claude/skills/pr-review-fastapi
+  - .claude/skills/pr-review-fastapi/SKILL.md
+  - .claude/skills/review-fastapi
+  - .claude/skills/review-fastapi/SKILL.md
+  - .claude/skills/sqlalchemy-expert
+  - .claude/skills/sqlalchemy-expert/SKILL.md
+  deployed_file_hashes:
+    .claude/rules/fastapi-architecture.md: sha256:1febf4900445c7f08b6e5c7d04db1541d0881ab345cb0de4fe90e05c7ce3b7c2
+    .claude/rules/fastapi-style.md: sha256:8c3e1a5deda016f9756892b6e73b343cd69135b67104c95291382230ee3199ed
+    .claude/rules/fastapi-testing.md: sha256:8fb83a87394c86dd00486e7195804d52e669fa5f3e0888b36562d31b97193ea8
+    .claude/skills/fastapi-route-expert/SKILL.md: sha256:e42ebde90e33707443d7921684db894b00920d0a5ef872034e87d7c4edc4560f
+    .claude/skills/pr-review-fastapi/SKILL.md: sha256:7548484ad9632c73a111fc548046fecd90a85e111aadd7e74d8a990a39db73e0
+    .claude/skills/review-fastapi/SKILL.md: sha256:d8fd7f29380e20247d24ffb6b3dbc2638a123b08494444344486068270965cc4
+    .claude/skills/sqlalchemy-expert/SKILL.md: sha256:e7cf2eb4233455cb15046e4c985a27c51e8ebb68938b94efbf1b60a605e4544a
+  content_hash: sha256:5093c0ce3204ca9da4f74c7bf0a22024b056691dfd242e11583f469e9f399d53
+  declared_license: MIT
+- repo_url: prj120/ai-setup
+  name: python-standards
+  host: github.com
+  resolved_commit: 5fee1b29be302e1a328d21fcbf13c4d186ac7fee
+  resolved_ref: v4.0.0
+  version: 4.0.0
+  virtual_path: packages/python
+  is_virtual: true
+  depth: 2
+  resolved_by: prj120/ai-setup
+  package_type: apm_package
+  deployed_files:
+  - .claude/rules/python-style.md
+  - .claude/rules/python-testing.md
+  - .claude/rules/python-tooling.md
+  - .claude/skills/pr-review-python
+  - .claude/skills/pr-review-python/SKILL.md
+  - .claude/skills/review-python
+  - .claude/skills/review-python/SKILL.md
+  deployed_file_hashes:
+    .claude/rules/python-style.md: sha256:dd7f9059e867ece57b3c40bcb35ad2f12bcb69a1ceda58dba5b6a42aa1f8c96d
+    .claude/rules/python-testing.md: sha256:2b750570446ab4182ffd6193296c7d8a8ba9af9486b23ebbea0169123afccb09
+    .claude/rules/python-tooling.md: sha256:f0469fd1a61f5793656af97a20c62dbfe0151ef5256e17e549242a0cb5b9e4e0
+    .claude/skills/pr-review-python/SKILL.md: sha256:a19d1170a544157a11525fc7ee862e2b0f9854deb8542639fc766b235c3603a7
+    .claude/skills/review-python/SKILL.md: sha256:2c4fb471557d7df3ee06760020b19b00b0cf7d2978ab8bdcb156332e6c2a80ed
+  content_hash: sha256:4478352cfbd80342f367d363e766961eb2e03688dd61868b596d0140ab7b4409
+  declared_license: MIT
+- repo_url: prj120/ai-setup
+  name: shared-agent-rules
+  host: github.com
+  resolved_commit: 5fee1b29be302e1a328d21fcbf13c4d186ac7fee
+  resolved_ref: v4.0.0
+  version: 4.0.0
+  virtual_path: packages/shared
+  is_virtual: true
+  depth: 2
+  resolved_by: prj120/ai-setup
+  package_type: apm_package
+  deployed_files:
+  - .claude/rules/code-style-general.md
+  - .claude/rules/docker.md
+  - .claude/rules/general-behavior.md
+  - .claude/rules/refactoring-protocol.md
+  - .claude/skills/concise-writer
+  - .claude/skills/concise-writer/SKILL.md
+  - .claude/skills/create-seeya-concept
+  - .claude/skills/create-seeya-concept/SKILL.md
+  - .claude/skills/document-feature
+  - .claude/skills/document-feature/SKILL.md
+  deployed_file_hashes:
+    .claude/rules/code-style-general.md: sha256:99e631ae2b26b0490cddbb602d5dbcf796454fa49670fd87042707c6299af82a
+    .claude/rules/docker.md: sha256:c41e1dce9b7733a5c706d6be15a30010a32b175a1c848c5d81dc5d232d045cd6
+    .claude/rules/general-behavior.md: sha256:7f869978fc20e7d4790573f8320a0905cc2f038d42ddbe8b17b74998efb8b374
+    .claude/rules/refactoring-protocol.md: sha256:8c8701a2c44eaa6d0ef32fbec52ec9ad8cc40f7d5422526ae0b0536b37c4dd9c
+    .claude/skills/concise-writer/SKILL.md: sha256:1a5da75f95f21d9d1a67009ac54aa81bc7d82a6bd4554e623a57ca6cedf5ca74
+    .claude/skills/create-seeya-concept/SKILL.md: sha256:5d3937d1879374f87fd935cfe0b0f2a6f12b1c126a08bffa65dc45dddc9aa1cf
+    .claude/skills/document-feature/SKILL.md: sha256:13f87eebe041ba74ba2b24d71bfdcb45e9626c817b44e526f71dea29fcd77d81
+  content_hash: sha256:267d3b8ef14ac09eab6b51bd8da186a86500f968d0d1c0971c7dfe74d6f704ab
+  declared_license: MIT
+deployments:
+- kind: project-relative
+  target: claude
+  value: .claude/rules/code-style-general.md
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/shared
+  active_owner: prj120/ai-setup/packages/shared
+  content_hash: sha256:99e631ae2b26b0490cddbb602d5dbcf796454fa49670fd87042707c6299af82a
+- kind: project-relative
+  target: claude
+  value: .claude/rules/docker.md
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/shared
+  active_owner: prj120/ai-setup/packages/shared
+  content_hash: sha256:c41e1dce9b7733a5c706d6be15a30010a32b175a1c848c5d81dc5d232d045cd6
+- kind: project-relative
+  target: claude
+  value: .claude/rules/fastapi-architecture.md
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/fastapi
+  active_owner: prj120/ai-setup/packages/fastapi
+  content_hash: sha256:1febf4900445c7f08b6e5c7d04db1541d0881ab345cb0de4fe90e05c7ce3b7c2
+- kind: project-relative
+  target: claude
+  value: .claude/rules/fastapi-style.md
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/fastapi
+  active_owner: prj120/ai-setup/packages/fastapi
+  content_hash: sha256:8c3e1a5deda016f9756892b6e73b343cd69135b67104c95291382230ee3199ed
+- kind: project-relative
+  target: claude
+  value: .claude/rules/fastapi-testing.md
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/fastapi
+  active_owner: prj120/ai-setup/packages/fastapi
+  content_hash: sha256:8fb83a87394c86dd00486e7195804d52e669fa5f3e0888b36562d31b97193ea8
+- kind: project-relative
+  target: claude
+  value: .claude/rules/general-behavior.md
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/shared
+  active_owner: prj120/ai-setup/packages/shared
+  content_hash: sha256:7f869978fc20e7d4790573f8320a0905cc2f038d42ddbe8b17b74998efb8b374
+- kind: project-relative
+  target: claude
+  value: .claude/rules/python-style.md
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/python
+  active_owner: prj120/ai-setup/packages/python
+  content_hash: sha256:dd7f9059e867ece57b3c40bcb35ad2f12bcb69a1ceda58dba5b6a42aa1f8c96d
+- kind: project-relative
+  target: claude
+  value: .claude/rules/python-testing.md
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/python
+  active_owner: prj120/ai-setup/packages/python
+  content_hash: sha256:2b750570446ab4182ffd6193296c7d8a8ba9af9486b23ebbea0169123afccb09
+- kind: project-relative
+  target: claude
+  value: .claude/rules/python-tooling.md
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/python
+  active_owner: prj120/ai-setup/packages/python
+  content_hash: sha256:f0469fd1a61f5793656af97a20c62dbfe0151ef5256e17e549242a0cb5b9e4e0
+- kind: project-relative
+  target: claude
+  value: .claude/rules/refactoring-protocol.md
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/shared
+  active_owner: prj120/ai-setup/packages/shared
+  content_hash: sha256:8c8701a2c44eaa6d0ef32fbec52ec9ad8cc40f7d5422526ae0b0536b37c4dd9c
+- kind: project-relative
+  target: claude
+  value: .claude/skills/concise-writer
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/shared
+  active_owner: prj120/ai-setup/packages/shared
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/concise-writer/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/shared
+  active_owner: prj120/ai-setup/packages/shared
+  content_hash: sha256:1a5da75f95f21d9d1a67009ac54aa81bc7d82a6bd4554e623a57ca6cedf5ca74
+- kind: project-relative
+  target: claude
+  value: .claude/skills/create-seeya-concept
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/shared
+  active_owner: prj120/ai-setup/packages/shared
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/create-seeya-concept/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/shared
+  active_owner: prj120/ai-setup/packages/shared
+  content_hash: sha256:5d3937d1879374f87fd935cfe0b0f2a6f12b1c126a08bffa65dc45dddc9aa1cf
+- kind: project-relative
+  target: claude
+  value: .claude/skills/document-feature
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/shared
+  active_owner: prj120/ai-setup/packages/shared
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/document-feature/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/shared
+  active_owner: prj120/ai-setup/packages/shared
+  content_hash: sha256:13f87eebe041ba74ba2b24d71bfdcb45e9626c817b44e526f71dea29fcd77d81
+- kind: project-relative
+  target: claude
+  value: .claude/skills/fastapi-route-expert
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/fastapi
+  active_owner: prj120/ai-setup/packages/fastapi
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/fastapi-route-expert/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/fastapi
+  active_owner: prj120/ai-setup/packages/fastapi
+  content_hash: sha256:e42ebde90e33707443d7921684db894b00920d0a5ef872034e87d7c4edc4560f
+- kind: project-relative
+  target: claude
+  value: .claude/skills/pr-review-fastapi
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/fastapi
+  active_owner: prj120/ai-setup/packages/fastapi
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/pr-review-fastapi/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/fastapi
+  active_owner: prj120/ai-setup/packages/fastapi
+  content_hash: sha256:7548484ad9632c73a111fc548046fecd90a85e111aadd7e74d8a990a39db73e0
+- kind: project-relative
+  target: claude
+  value: .claude/skills/pr-review-python
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/python
+  active_owner: prj120/ai-setup/packages/python
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/pr-review-python/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/python
+  active_owner: prj120/ai-setup/packages/python
+  content_hash: sha256:a19d1170a544157a11525fc7ee862e2b0f9854deb8542639fc766b235c3603a7
+- kind: project-relative
+  target: claude
+  value: .claude/skills/review-fastapi
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/fastapi
+  active_owner: prj120/ai-setup/packages/fastapi
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/review-fastapi/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/fastapi
+  active_owner: prj120/ai-setup/packages/fastapi
+  content_hash: sha256:d8fd7f29380e20247d24ffb6b3dbc2638a123b08494444344486068270965cc4
+- kind: project-relative
+  target: claude
+  value: .claude/skills/review-python
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/python
+  active_owner: prj120/ai-setup/packages/python
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/review-python/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/python
+  active_owner: prj120/ai-setup/packages/python
+  content_hash: sha256:2c4fb471557d7df3ee06760020b19b00b0cf7d2978ab8bdcb156332e6c2a80ed
+- kind: project-relative
+  target: claude
+  value: .claude/skills/sqlalchemy-expert
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/fastapi
+  active_owner: prj120/ai-setup/packages/fastapi
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/sqlalchemy-expert/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - prj120/ai-setup/packages/fastapi
+  active_owner: prj120/ai-setup/packages/fastapi
+  content_hash: sha256:e7cf2eb4233455cb15046e4c985a27c51e8ebb68938b94efbf1b60a605e4544a

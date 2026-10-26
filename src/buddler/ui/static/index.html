@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Buddler Trace</title>
+  <link rel="stylesheet" href="/ui/static/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"
+          integrity="sha384-rbtjAdnIQE/aQJGEgXrVUlMibdfTSa4PQju4HDhN3sR2PmaKFzhEafuePsl9H/9I"
+          crossorigin="anonymous" defer></script>
+  <script src="/ui/static/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/ui">Buddler <span>trace</span></a>
+    <nav>
+      <a href="/ui">Runs</a>
+      <a href="/docs" target="_blank" rel="noopener">API</a>
+      <button type="button" id="change-key" class="link">API key</button>
+    </nav>
+  </header>
+
+  <dialog id="key-dialog">
+    <form method="dialog" id="key-form">
+      <h2>API key</h2>
+      <p>Enter <code>API_KEY</code> from <code>.env</code>. Kept in this tab only (sessionStorage).</p>
+      <input id="key-input" type="password" autocomplete="off" required>
+      <menu><button type="submit" class="primary">Save</button></menu>
+    </form>
+  </dialog>
+
+  <main id="view-list" hidden>
+    <section class="card">
+      <div class="card-head">
+        <h1>Runs</h1>
+        <span class="muted" id="list-updated"></span>
+      </div>
+      <div class="table-wrap">
+        <table class="runs">
+          <thead><tr><th>Started</th><th>Kind</th><th>Subject</th><th>Status</th><th>Duration</th><th>Tokens in/out</th><th>Run</th></tr></thead>
+          <tbody id="runs-body"></tbody>
+        </table>
+      </div>
+      <p class="muted" id="runs-empty" hidden>No runs yet. Start one with <code>buddler ask "I'm feeling cold"</code> or <code>POST /runs</code>.</p>
+    </section>
+  </main>
+
+  <main id="view-run" hidden>
+    <section class="run-head card">
+      <div>
+        <div class="eyebrow" id="run-kind"></div>
+        <h1 id="run-title">Run</h1>
+        <div class="muted mono" id="run-id"></div>
+      </div>
+      <div class="stats">
+        <div class="stat"><span id="stat-status" class="badge">…</span><label>status</label></div>
+        <div class="stat"><b id="stat-duration">–</b><label>duration</label></div>
+        <div class="stat"><b id="stat-llm">0</b><label>LLM calls</label></div>
+        <div class="stat"><b id="stat-mcp">0</b><label>MCP queries</label></div>
+        <div class="stat"><b id="stat-home">0</b><label>Home calls</label></div>
+        <div class="stat"><b id="stat-tokens">0</b><label>tokens</label></div>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="card graph-card">
+        <div class="card-head">
+          <h2>Workflow</h2>
+          <div class="legend">
+            <span class="dot st-pending"></span>pending
+            <span class="dot st-running"></span>running
+            <span class="dot st-paused"></span>paused
+            <span class="dot st-done"></span>done
+            <span class="dot st-warn"></span>degraded
+            <span class="dot st-error"></span>failed
+          </div>
+        </div>
+        <div id="graph" class="graph" aria-label="Workflow graph"></div>
+        <p class="muted small">Click a node to see what the step does (panel on the right) and filter the timeline. Run-level steps (e.g. <code>mcp_connect</code>) appear in the timeline only.</p>
+      </section>
+
+      <section class="card timeline-card">
+        <div class="card-head">
+          <h2>Timeline</h2>
+          <span class="muted small" id="filter-label"></span>
+          <span class="live" id="live" hidden>live</span>
+        </div>
+        <ol id="timeline" class="timeline"></ol>
+      </section>
+
+      <section class="card detail-card">
+        <div class="card-head"><h2>Event detail</h2></div>
+        <div id="detail" class="muted">Click a workflow node to see what the step does, or an event for its details.</div>
+      </section>
+    </div>
+
+    <section class="card" id="explain" hidden>
+      <div class="card-head"><h2>How this workflow works</h2></div>
+      <p id="explain-overview" class="lead"></p>
+      <dl id="explain-glossary" class="glossary"></dl>
+      <ol id="explain-steps" class="steps"></ol>
+    </section>
+
+    <section class="card" id="resolution" hidden>
+      <div class="card-head"><h2>Resolution</h2><span class="muted" id="res-meta"></span></div>
+      <p id="res-reply" class="lead"></p>
+      <p id="res-summary" class="muted"></p>
+      <h3>Observations</h3>
+      <dl id="res-observations" class="glossary"></dl>
+      <div id="res-actions-wrap" hidden>
+        <h3>Actions</h3>
+        <ul id="res-actions" class="items"></ul>
+      </div>
+      <div id="res-advice-wrap" hidden>
+        <h3>Advice</h3>
+        <ul id="res-advice" class="items"></ul>
+      </div>
+    </section>
+
+    <section class="card error-card" id="run-error" hidden></section>
+  </main>
+
+  <div id="toast" class="toast" hidden></div>
+</body>
+</html>

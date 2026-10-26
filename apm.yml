@@ -1,0 +1,38 @@
+name: buddler
+version: 1.1.0
+description: AgenticAI demo based on homematic integration and environment
+author: Christian Schneider
+
+# Agents to deploy rules/skills for (omit = auto-detect)
+targets:
+  - claude
+  - gemini
+
+# Also compile this repo's own .apm/ rules and skills
+includes: auto
+
+dependencies:
+  apm:
+    # # --- TypeScript stack ---------------------------
+    # # Hono / Drizzle backend (pulls shared + typescript)
+    # - git: https://github.com/prj120/ai-setup
+    #   path: packages/api
+    #   ref: v4.0.0
+    # # Vue 3 / Quasar / Capacitor frontend
+    # - git: https://github.com/prj120/ai-setup
+    #   path: packages/web
+    #   ref: v4.0.0
+
+    # --- Python stack -------------------------------
+    # FastAPI / SQLAlchemy backend (pulls shared + python)
+    - git: https://github.com/prj120/ai-setup
+      path: packages/fastapi
+      ref: v4.0.0
+    # Generic Python only (CLI, scripts, data)
+    # - git: https://github.com/prj120/ai-setup
+    #   path: packages/python
+    #   ref: v4.0.0
+
+  mcp: []
+
+scripts: {}
