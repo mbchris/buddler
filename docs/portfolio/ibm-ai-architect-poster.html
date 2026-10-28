@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Buddler – Requirement Poster</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"
+        integrity="sha384-rbtjAdnIQE/aQJGEgXrVUlMibdfTSa4PQju4HDhN3sR2PmaKFzhEafuePsl9H/9I"
+        crossorigin="anonymous"></script>
+<!--
+  A3 landscape poster. Open as-is to print A3; open with #a4-tiles to print it as two
+  A4 portrait sheets (left/right half) for an A4 printer. The seam at 210 mm runs through
+  an empty gutter, so the printer's unprintable border loses nothing: butt the sheets together.
+-->
+<style>
+  @page { size: A3 landscape; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #fff; }
+  body { font: 8.6pt/1.3 "Helvetica Neue", Arial, sans-serif; color: #111; }
+  .poster {
+    width: 420mm; height: 297mm; padding: 10mm;
+    display: grid; grid-template-columns: 1fr 1fr; column-gap: 14mm;
+  }
+  .col { display: flex; flex-direction: column; min-width: 0; overflow: hidden; }
+  h1 { font-size: 15pt; margin: 0 0 1mm; }
+  h2 { font-size: 10.5pt; margin: 2mm 0 1mm; border-bottom: 0.4mm solid #111; padding-bottom: 0.6mm; }
+  h2 small { font-weight: normal; color: #444; font-size: 8pt; }
+  p { margin: 0 0 1.5mm; }
+  .sub { color: #444; }
+  .diagram { text-align: center; }
+  .diagram svg { max-width: 100% !important; height: auto; }
+  .d-arch svg { max-height: 128mm; }
+  .d-flow svg { max-height: 150mm; }
+  .d-seq svg { max-height: 104mm; }
+  .key { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4mm 4mm; font-size: 7.8pt; margin-bottom: 1.2mm; }
+  .key b { display: inline-block; min-width: 6mm; }
+  .legend { font-size: 7.8pt; }
+  .swatch { display: inline-block; width: 6mm; height: 3mm; vertical-align: -0.5mm; margin: 0 1mm 0 3mm; }
+  .sw-req { background: #fff4c2; border: 0.3mm dashed #7a5c00; }
+  .sw-gap { background: #fde2e2; border: 0.3mm dotted #a11; }
+  .sw-sys { background: #f2f2f2; border: 0.3mm solid #333; }
+  table { width: 100%; border-collapse: collapse; font-size: 7.6pt; }
+  th, td { border: 0.25mm solid #888; padding: 0.6mm 1.2mm; text-align: left; vertical-align: top; }
+  th { background: #eee; }
+  td.s { white-space: nowrap; font-weight: bold; }
+  .foot { font-size: 7pt; color: #555; margin-top: auto; }
+
+  /* #a4-tiles: two A4 portrait sheets, each a 210 mm window onto the poster. */
+  .tile { width: 210mm; height: 297mm; overflow: hidden; position: relative; break-after: page; }
+  .tile.right { break-after: auto; }
+  .tile .poster { position: absolute; top: 0; left: 0; }
+  .tile.right .poster { left: -210mm; }
+</style>
+</head>
+<body>
+
+<div class="poster">
+  <!-- ───────────── Left half: overview, architecture, coverage ───────────── -->
+  <div class="col">
+    <h1>Buddler: Agentic home automation, mapped to the IBM AI Architect profile</h1>
+    <p class="sub">A sentence like <em>"I'm feeling cold"</em> is turned into an observed, knowledge-backed decision
+      for a Homematic home: the agent reads room, clock and weather, matches curated symptom → action knowledge
+      (Postgres/pgvector) and then acts on the thermostat within hard bounds, or advises. Every step is traced.</p>
+    <div class="key">
+      <div><b>R1</b> AI/ML foundations, DevSecOps &amp; AIOps</div>
+      <div><b>R2</b> Design of complex IT architectures with AI components</div>
+      <div><b>R3</b> LLMs, generative &amp; agentic AI, robust and scalable</div>
+      <div><b>R4</b> Containers + GenAI/agentic architectures (RAG, patterns)</div>
+      <div><b>R5</b> DevSecOps/MLOps, API design &amp; integration, Python</div>
+      <div><b>R6</b> Data formats, sources, interfaces, end-to-end flow</div>
+      <div><b>R7</b> System engineering: decompose and recompose systems</div>
+      <div><b>R8</b> Performance and scalability of analytics components</div>
+    </div>
+    <div class="legend">Legend:
+      <span class="swatch sw-sys"></span>system component
+      <span class="swatch sw-req"></span>requirement covered
+      <span class="swatch sw-gap"></span>not covered / partial
+    </div>
+
+    <h2>1 · Architecture</h2>
+    <div class="diagram d-arch"><pre class="mermaid">
+flowchart TB
+  subgraph IF["Interfaces"]
+    CLI["CLI<br/>Typer + Rich"]
+    API["REST API<br/>FastAPI · SSE"]
+    UI["Trace UI<br/>Mermaid, live"]
+  end
+  S["Service layer<br/>resolve · train · knowledge<br/>RunManager (async)"]
+  G["Agent layer<br/>LangGraph StateGraph<br/>resolve + train graphs"]
+
+  subgraph PORTS["Ports and adapters"]
+    LLM["llm/<br/>chat + embeddings<br/>budget · cache"]
+    HOME["home/<br/>CCU-Jack VEAP<br/>· fake home"]
+    WX["weather/<br/>Open-Meteo<br/>· fake"]
+    KN["knowledge/<br/>conditions ·<br/>actuation guard"]
+    MCPC["mcp_client/<br/>allowlist +<br/>SQL guard"]
+    REPO["repositories/<br/>async SQLAlchemy<br/>vector search"]
+    TR["tracing/<br/>spans →<br/>trace events"]
+  end
+
+  GW["Requesty gateway<br/>OpenAI-compatible"]
+  CCU[["Homematic CCU<br/>thermostats"]]
+  OM[["Open-Meteo<br/>forecast API"]]
+  subgraph INFRA["Docker Compose"]
+    MCP["Postgres MCP Pro<br/>restricted · mcp_ro"]
+    PG[("PostgreSQL 17<br/>+ pgvector")]
+  end
+
+  CLI --> S
+  API --> S
+  UI --> API
+  S --> G
+  G --> LLM
+  G --> HOME
+  G --> WX
+  G --> KN
+  G --> MCPC
+  G --> REPO
+  G --> TR
+  LLM --> GW
+  HOME --> CCU
+  WX --> OM
+  MCPC --> MCP
+  MCP --> PG
+  REPO --> PG
+  TR --> PG
+
+  b5(["R5 · REST + SSE API,<br/>bearer auth (OAuth2 open)"]):::req
+  b2(["R2 · R7 · layered<br/>ports + adapters,<br/>5 ADRs, design doc"]):::req
+  b6(["R6 · IoT + weather<br/>integration, JSON/REST,<br/>fakes selected by config"]):::req
+  b1(["R1 · DevSecOps: bounded<br/>actuation, least privilege,<br/>SQL guard, dry-run"]):::req
+  b1b(["R1 · AIOps: every<br/>step traced to Postgres"]):::req
+  bc(["Gap · AWS / Azure:<br/>cloud-agnostic,<br/>not deployed"]):::gap
+  b4(["R4 partial · Docker:<br/>non-root multi-stage,<br/>digest-pinned; no K8s/GPU"]):::gap
+
+  b5 -.- API
+  b2 -.- G
+  b6 -.- HOME
+  b1 -.- KN
+  b1b -.- TR
+  GW -.- bc
+  PG -.- b4
+
+  classDef default fill:#f2f2f2,stroke:#333,color:#111
+  classDef req fill:#fff4c2,stroke:#7a5c00,stroke-dasharray:5 3,color:#111
+  classDef gap fill:#fde2e2,stroke:#a11,stroke-dasharray:2 2,color:#111
+    </pre></div>
+
+    <h2>Coverage summary</h2>
+    <table>
+      <tr><th>Requirement</th><th>Evidence in this project</th><th>Status</th></tr>
+      <tr><td>R3 LLMs, generative + agentic AI</td><td>LangGraph workflows, bounded tool loop, structured output, grounded citations, autonomous but guarded actuation</td><td class="s">Strong</td></tr>
+      <tr><td>R4 RAG / agentic patterns</td><td>pgvector retrieval, tool use via MCP, human-in-the-loop interrupt, LLM chooses only among evaluated candidates</td><td class="s">Strong</td></tr>
+      <tr><td>R2 · R7 Architecture, decomposition</td><td>Ports and adapters (LLM, home, weather, MCP), design doc, 5 ADRs, fakes per port</td><td class="s">Strong</td></tr>
+      <tr><td>R5 API design, Python</td><td>FastAPI REST + SSE, OpenAI-compatible gateway, MCP; Python 3.12, mypy strict, ruff, ~95 pytest tests</td><td class="s">Strong</td></tr>
+      <tr><td>R6 Data sources, interfaces</td><td>CCU-Jack VEAP (IoT), Open-Meteo, Postgres; JSONB contracts validated by Pydantic</td><td class="s">Strong</td></tr>
+      <tr><td>R1 DevSecOps, AIOps</td><td>Actuation guard, least-privilege DB roles, SQL guard, dry-run, digest-pinned images; full tracing</td><td class="s">Good</td></tr>
+      <tr><td>R8 Performance, scalability</td><td>HNSW index, embedding cache, async I/O; small data volume, no load tests</td><td class="s">Partial</td></tr>
+      <tr><td>R4 Containers / OpenShift, GPU</td><td>Docker Compose, non-root multi-stage image</td><td class="s">Partial</td></tr>
+      <tr><td>R5 CI/CD, MLOps, PyTorch</td><td>Local quality gates only; no pipeline, no model training</td><td class="s">Gap</td></tr>
+      <tr><td>Cloud AWS / Azure, hybrid</td><td>Cloud-agnostic gateway; no cloud deployment</td><td class="s">Gap</td></tr>
+      <tr><td>Probabilistic / stochastic models</td><td>Deterministic condition rules, vector similarity, weather forecast as input</td><td class="s">Gap</td></tr>
+    </table>
+    <p class="foot">Source: docs/design.md, docs/adr/*, AGENTS.md, src/buddler/agents/graphs/*. Requirement wording condensed from the job advertisement.</p>
+  </div>
+
+  <!-- ───────────── Right half: workflows, agent loop ───────────── -->
+  <div class="col">
+    <h2>2 · Workflows (LangGraph) <small>· Resolve acts or advises; Train curates knowledge with a human in the loop</small></h2>
+    <div class="diagram d-flow"><pre class="mermaid">
+flowchart TB
+  IN[/"Situation: 'I'm feeling cold'"/] --> un
+
+  subgraph R["Resolve · user"]
+    un["1 · understand<br/>LLM → symptom · room · urgency"] --> lo["2 · locate<br/>--room › mention › default"]
+    lo --> ob["3 · observe<br/>time · weather · room climate"]
+    ob --> rt["4 · retrieve<br/>embed · top-k confirmed · S / A refs"]
+    rt --> ev["5 · evaluate<br/>conditions: met / violated / unknown"]
+    ev --> ag[["6 · agent<br/>bounded tool loop (section 3)"]]
+    ag --> de["7 · decide<br/>LLM picks refs · reply · citations"]
+    de --> ac["8 · act<br/>actuation guard → CCU write"]
+    ac --> rp["9 · report<br/>persist resolution"]
+  end
+
+  SY[/"Developer: symptom + hint"/] --> em
+  subgraph T["Train · developer"]
+    em["1 · embed"] --> ma["2 · match<br/>nearest symptom · avoid duplicates"]
+    ma --> pr["3 · propose<br/>LLM proposes actions + conditions"]
+    pr --> rv{{"4 · review<br/>interrupt: confirm / reject / defer"}}
+    rv --> ps["5 · persist<br/>provenance · never overwrite"]
+  end
+
+  KB[("Knowledge base<br/>confirmed symptoms → actions")]
+  ps -->|writes| KB
+  rt -.->|reads| KB
+
+  w3a(["R3 · LLM failure degrades:<br/>raw sentence becomes symptom"]):::req
+  w6(["R6 · sources fail soft → 'unknown',<br/>which blocks device actions"]):::req
+  w4b(["R4 · RAG: pgvector HNSW, cosine distance,<br/>embedding cache, deterministic node"]):::req
+  w9(["Partial · rule-based tri-state logic;<br/>no probabilistic / stochastic models"]):::gap
+  w4c(["R4 · Agentic pattern: LLM decides next step,<br/>tools via MCP, hard budgets"]):::req
+  w3c(["R3 · Grounding: claims cite S / A / O refs;<br/>unknown refs dropped and listed"]):::req
+  w1(["R1 · Guardrails for autonomous action:<br/>room allowlist, range, delta, cooldown (ADR 0002)"]):::req
+  w3b(["R3 · Human-in-the-loop via LangGraph interrupt();<br/>confirmed knowledge outranks LLM proposals"]):::req
+  wml(["Gap · MLOps / PyTorch: no model weights trained;<br/>'training' = knowledge curation (ADR 0003)"]):::gap
+
+  w3a -.- un
+  w6 -.- ob
+  w4b -.- rt
+  w9 -.- ev
+  w4c -.- ag
+  w3c -.- de
+  w1 -.- ac
+  w3b -.- rv
+  wml -.- T
+
+  classDef default fill:#f2f2f2,stroke:#333,color:#111
+  classDef req fill:#fff4c2,stroke:#7a5c00,stroke-dasharray:5 3,color:#111
+  classDef gap fill:#fde2e2,stroke:#a11,stroke-dasharray:2 2,color:#111
+    </pre></div>
+
+    <h2>3 · Agentic AI <small>· bounded tool loop and guarded actuation (Resolve, steps 6–8); no device-write tool for the agent</small></h2>
+    <div class="diagram d-seq"><pre class="mermaid">
+sequenceDiagram
+  autonumber
+  participant N as agent node
+  participant L as LLM
+  participant M as SQL guard + MCP
+  participant H as Homematic
+  participant A as actuation guard
+  participant T as tracer
+  N->>N: briefing + data blocks
+  Note right of N: R1 DevSecOps · user sentence and<br/>tool results are untrusted data
+  loop ≤ 8 steps · ≤ 6 tool calls · token budget
+    N->>L: briefing + observations
+    L-->>N: AgentStep JSON<br/>query | read_room | finish
+    Note over N,L: R3 · structured output,<br/>Pydantic-validated, bounded retry
+    alt query
+      N->>M: SELECT only, LIMIT cap,<br/>mcp_ro on knowledge.* views
+      M-->>N: rows (e.g. recent device commands)
+      N->>T: MCP event
+    else read_room
+      N->>H: read climate (configured room)
+      H-->>N: temperature · setpoint · window
+    else finish
+      N->>N: notes citing S / A / O
+    end
+  end
+  N->>L: decide
+  L-->>N: chosen refs + reply + citations
+  N->>A: device action from confirmed knowledge
+  A->>A: conditions met · room allowed ·<br/>16–24 °C · Δ ≤ 2 · 1 write · cooldown
+  A->>H: SET_POINT_TEMPERATURE (unless dry-run)
+  A->>T: device_command: applied | dry_run | rejected | failed
+  Note over N,T: R1 AIOps · R2 · each step visible in the trace view · MCP down → run continues without tools
+    </pre></div>
+  </div>
+</div>
+
+<script>
+  if (location.hash === "#a4-tiles") {
+    const poster = document.querySelector(".poster");
+    const left = document.createElement("div");
+    const right = document.createElement("div");
+    left.className = "tile";
+    right.className = "tile right";
+    right.append(poster.cloneNode(true));
+    poster.replaceWith(left);
+    left.append(poster);
+    left.after(right);
+    const page = document.createElement("style");
+    page.textContent = "@page { size: A4 portrait; margin: 0; }";
+    document.head.append(page);
+  }
+  mermaid.initialize({
+    startOnLoad: true,
+    securityLevel: "strict",
+    theme: "base",
+    themeVariables: {
+      fontFamily: "Helvetica Neue, Arial, sans-serif",
+      fontSize: "16px",
+      primaryColor: "#f2f2f2",
+      primaryBorderColor: "#333",
+      lineColor: "#333",
+      clusterBkg: "#fafafa",
+      clusterBorder: "#777",
+      noteBkgColor: "#fff4c2",
+      noteBorderColor: "#7a5c00",
+      actorBkg: "#f2f2f2",
+      actorBorder: "#333"
+    },
+    flowchart: { htmlLabels: true, curve: "basis", useMaxWidth: true, nodeSpacing: 22, rankSpacing: 30 },
+    sequence: { useMaxWidth: true, mirrorActors: false, messageFontSize: 15, noteFontSize: 15, actorFontSize: 15, actorMargin: 30, width: 130 }
+  });
+</script>
+</body>
+</html>

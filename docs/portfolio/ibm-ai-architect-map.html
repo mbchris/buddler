@@ -24,7 +24,7 @@
   .diagram svg { max-width: 100% !important; height: auto; }
   .p1 .diagram svg { max-height: 182mm; }
   .p2 .diagram svg { max-height: 205mm; }
-  .p3 .diagram svg { max-height: 140mm; }
+  .p3 .diagram svg { max-height: 125mm; }
   .key { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6mm 5mm; font-size: 8.3pt; margin-bottom: 2mm; }
   .key b { display: inline-block; min-width: 7mm; }
   .legend { font-size: 8.3pt; margin-bottom: 2mm; }
@@ -145,7 +145,7 @@ flowchart TB
 flowchart TB
   IN[/"Situation: 'I'm feeling cold'"/] --> un
 
-  subgraph R["Resolve · user gets an action or advice"]
+  subgraph R["Resolve · user"]
     un["1 · understand<br/>LLM → symptom · room · urgency"] --> lo["2 · locate<br/>--room › mention › default"]
     lo --> ob["3 · observe<br/>time · weather · room climate"]
     ob --> rt["4 · retrieve<br/>embed · top-k confirmed · S / A refs"]
@@ -157,7 +157,7 @@ flowchart TB
   end
 
   SY[/"Developer: symptom + hint"/] --> em
-  subgraph T["Train · developer curates knowledge"]
+  subgraph T["Train · developer"]
     em["1 · embed"] --> ma["2 · match<br/>nearest symptom · avoid duplicates"]
     ma --> pr["3 · propose<br/>LLM proposes actions + conditions"]
     pr --> rv{{"4 · review<br/>interrupt: confirm / reject / defer"}}
